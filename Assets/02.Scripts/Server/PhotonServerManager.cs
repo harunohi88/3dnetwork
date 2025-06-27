@@ -10,6 +10,9 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 	
 	private void Start()
 	{
+		PhotonNetwork.SendRate = 60;
+		PhotonNetwork.SerializationRate = 60;
+		
 		PhotonNetwork.GameVersion = GameVersion;
 		PhotonNetwork.NickName = NickName;
 		
@@ -45,11 +48,7 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 	{
 		Debug.Log($"Joined Room: {PhotonNetwork.CurrentRoom.Name}");
 		
-		Dictionary<int, Player> players = PhotonNetwork.CurrentRoom.Players;
-		foreach (KeyValuePair<int, Player> player in players)
-		{
-			Debug.Log($"Player{player.Value.ActorNumber}: {player.Value.NickName} {player.Value.UserId}");
-		}
+		PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
 	}
 
 	public override void OnJoinRandomFailed(short returnCode, string message)
