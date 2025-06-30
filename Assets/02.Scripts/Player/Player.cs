@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Player : MonoBehaviour, IDamaged
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour, IDamaged
     [SerializeField] private GameObject _minimpapIconRed;
     [SerializeField] private Animator _animator;
     [SerializeField] private CharacterController _characterController;
+    [SerializeField] private CinemachineImpulseSource _cinemachineImpulseSource;
     
     private PhotonView _photonView;
     private float _staminaRegenTimer;
@@ -31,6 +33,7 @@ public class Player : MonoBehaviour, IDamaged
         _playerStat = GetComponent<PlayerStat>();
         _worldCanvas = GetComponent<PlayerWorldSpaceCanvas>();
         _characterController = GetComponent<CharacterController>();
+        _cinemachineImpulseSource = GetComponent<CinemachineImpulseSource>();
         _currentHealth = _playerStat.MaxHealth;
         _currentStamina = _playerStat.MaxStamina;
     }
@@ -90,6 +93,7 @@ public class Player : MonoBehaviour, IDamaged
         if (_photonView.IsMine)
         {
             EventManager.Instance.OnPlayerHealthChanged?.Invoke(_currentHealth);
+            _cinemachineImpulseSource.GenerateImpulse();
         }
         if (_currentHealth <= 0)
         {
