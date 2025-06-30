@@ -6,7 +6,7 @@ public class PlayerStat : MonoBehaviour
 	public float MaxStamina;
 	public float StaminaRegenPerSecond;
 	public float StaminaRegenDelay;
-	public float AttackPower;
+	public float AttackDamage;
 	public float AttackSpeed;
 	public float MovementSpeed;
 	public float RunSpeed;

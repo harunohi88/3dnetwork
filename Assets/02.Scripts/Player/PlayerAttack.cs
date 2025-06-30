@@ -6,9 +6,15 @@ public class PlayerAttack : PlayerAbility
 {
 	[SerializeField] private Animator _animator;
 	[SerializeField] private List<string> _attackAnimationTriggers;
+	[SerializeField] private Collider _weaponCollider;
 
 	private float _cooldownTimer;
 
+	private void Start()
+	{
+		DeactivateWeaponCollider();
+	}
+	
 	private void Update()
 	{
 		if (!_photonView.IsMine) return;
@@ -19,6 +25,16 @@ public class PlayerAttack : PlayerAbility
 		{
 			Attack();
 		}
+	}
+	
+	public void ActivateWeaponCollider()
+	{
+		_weaponCollider.enabled = true;
+	}
+	
+	public void DeactivateWeaponCollider()
+	{
+		_weaponCollider.enabled = false;
 	}
 
 	private void CooldownReduce()
@@ -43,5 +59,14 @@ public class PlayerAttack : PlayerAbility
 	private void PlayAttackAnimation(int randomIndex)
 	{
 		_animator.SetTrigger(_attackAnimationTriggers[randomIndex]);
+	}
+
+	public void Hit(Collider other)
+	{
+		if (!_photonView.IsMine) return;
+		
+		// damaged.Damaged(_ownerPlayer.PlayerStat.AttackDamage);
+		PhotonView otherPhotonView = other.GetComponent<PhotonView>();
+		otherPhotonView.RPC(nameof(Player.Damaged), RpcTarget.All, _ownerPlayer.PlayerStat.AttackDamage);
 	}
 }

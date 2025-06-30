@@ -2,12 +2,13 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamaged
 {
     public PlayerStat PlayerStat => _playerStat;
     private PlayerStat _playerStat;
     
     [SerializeField] private TextMeshProUGUI _playerNameText;
+    [SerializeField] private PlayerWorldSpaceCanvas _worldCanvas;
     [SerializeField] private float _currentHealth;
     [SerializeField] private float _currentStamina;
     [SerializeField] private GameObject _minimpapIconGreen;
@@ -25,12 +26,14 @@ public class Player : MonoBehaviour
     
     private void Start()
     {
+        _worldCanvas.SetMaxHealth(_playerStat.MaxHealth);
         _currentHealth = _playerStat.MaxHealth;
         _currentStamina = _playerStat.MaxStamina;
         _playerNameText.text = $"{_photonView.Owner.NickName}_{_photonView.OwnerActorNr}";
         if (_photonView.IsMine)
         {
             _playerNameText.color = Color.green;
+            HUD.Instance.SetMaxHealth(_playerStat.MaxHealth);
             HUD.Instance.SetMaxStamina(_playerStat.MaxStamina);
             _minimpapIconGreen.SetActive(true);
         }
@@ -65,9 +68,17 @@ public class Player : MonoBehaviour
         }
     }
     
-    public void TakeDamage(float damage)
+    [PunRPC]
+    public void Damaged(float damage)
     {
+        Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
         _currentHealth -= damage;
+        _currentHealth = Mathf.Max(_currentHealth, 0);
+        _worldCanvas.UpdateHealthBar(_currentHealth);
+        if (_photonView.IsMine)
+        {
+            EventManager.Instance.OnPlayerHealthChanged?.Invoke(_currentHealth);
+        }
         if (_currentHealth <= 0)
         {
             Debug.Log("Player has died.");
