@@ -26,6 +26,7 @@ public class PlayerRotate : PlayerAbility
     private void Update()
     {
         if (!_photonView.IsMine) return;
+        if (_ownerPlayer.IsDead) return;
         
         Rotate();
     }

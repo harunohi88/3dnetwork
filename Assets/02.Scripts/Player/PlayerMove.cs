@@ -26,6 +26,8 @@ public class PlayerMove : PlayerAbility, IPunObservable
 
     private void Update()
     {
+        if (_ownerPlayer.IsDead) return;
+        
         if (!_photonView.IsMine)
         {
             UpdatePositionAndRotation();

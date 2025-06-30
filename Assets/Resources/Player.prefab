@@ -302,7 +302,7 @@ Transform:
   m_GameObject: {fileID: 3752239509099516743}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 40, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -397,6 +397,9 @@ MonoBehaviour:
   _currentStamina: 0
   _minimpapIconGreen: {fileID: 1410778891925294627}
   _minimpapIconRed: {fileID: 313897887131582111}
+  _animator: {fileID: 4693494827158218410}
+  _characterController: {fileID: 0}
+  IsDead: 0
 --- !u!114 &571854313697818631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,7 +430,7 @@ MonoBehaviour:
   MaxStamina: 100
   StaminaRegenPerSecond: 20
   StaminaRegenDelay: 0.5
-  AttackDamage: 10
+  AttackDamage: 40
   AttackSpeed: 1.2
   MovementSpeed: 5
   RunSpeed: 8
@@ -508,7 +511,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 3397408232669700733}
   - {fileID: 2628424219065090229}
   - {fileID: 3880387665059170638}
   sceneViewId: 0

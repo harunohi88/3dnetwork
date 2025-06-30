@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -13,10 +16,13 @@ public class Player : MonoBehaviour, IDamaged
     [SerializeField] private float _currentStamina;
     [SerializeField] private GameObject _minimpapIconGreen;
     [SerializeField] private GameObject _minimpapIconRed;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private CharacterController _characterController;
     
     private PhotonView _photonView;
     private float _staminaRegenTimer;
     private bool _staminaRegenActive = true;
+    public bool IsDead = false;
     
     private void Awake()
     {
@@ -24,6 +30,7 @@ public class Player : MonoBehaviour, IDamaged
         _photonView = GetComponent<PhotonView>();
         _playerStat = GetComponent<PlayerStat>();
         _worldCanvas = GetComponent<PlayerWorldSpaceCanvas>();
+        _characterController = GetComponent<CharacterController>();
         _currentHealth = _playerStat.MaxHealth;
         _currentStamina = _playerStat.MaxStamina;
     }
@@ -33,8 +40,6 @@ public class Player : MonoBehaviour, IDamaged
         Debug.Log("Player Start");
         _worldCanvas.SetMaxHealth(_playerStat.MaxHealth);
         _worldCanvas.UpdateHealthBar(_currentHealth);
-        // _photonView.RPC("SetMaxHealth", RpcTarget.AllBuffered, _playerStat.MaxHealth);
-        // _photonView.RPC("UpdateHealthBar", RpcTarget.AllBuffered, _currentHealth);
         _playerNameText.text = $"{_photonView.Owner.NickName}_{_photonView.OwnerActorNr}";
         if (_photonView.IsMine)
         {
@@ -77,9 +82,10 @@ public class Player : MonoBehaviour, IDamaged
     [PunRPC]
     public void Damaged(float damage)
     {
+        if (IsDead) return;
+        
         _currentHealth -= damage;
         _currentHealth = Mathf.Max(_currentHealth, 0);
-        // _photonView.RPC("UpdateHealthBar", RpcTarget.AllBuffered, _currentHealth);
         _worldCanvas.UpdateHealthBar(_currentHealth);
         if (_photonView.IsMine)
         {
@@ -87,8 +93,35 @@ public class Player : MonoBehaviour, IDamaged
         }
         if (_currentHealth <= 0)
         {
-            Debug.Log("Player has died.");
+            StartCoroutine(OnDeathCoroutine());
         }
+    }
+
+    public IEnumerator OnDeathCoroutine()
+    {
+        IsDead = true;
+        _characterController.enabled = false;
+        _animator.SetTrigger("Die");
+        
+        yield return new WaitForSeconds(5f);
+        
+        Debug.Log("Respawning player...");
+        _currentHealth = _playerStat.MaxHealth;
+        _currentStamina = _playerStat.MaxStamina;
+        _worldCanvas.SetMaxHealth(_playerStat.MaxHealth);
+        _worldCanvas.UpdateHealthBar(_currentHealth);
+        _staminaRegenActive = true;
+        _staminaRegenTimer = _playerStat.StaminaRegenDelay;
+        IsDead = false;
+        _animator.SetTrigger("Respawn");
+        if (_photonView.IsMine)
+        {
+            gameObject.transform.position = RandomSpawn.Instance.GetRandomSpawnPoint();
+            EventManager.Instance.OnPlayerHealthChanged?.Invoke(_currentHealth);
+            EventManager.Instance.OnPlayerStaminaChanged?.Invoke(_currentStamina);
+        }
+        _characterController.enabled = true;
+        Debug.Log("Player respawned.");
     }
     
     public bool TryUseStamina(float amount)
