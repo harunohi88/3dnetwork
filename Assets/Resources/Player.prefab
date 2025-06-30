@@ -96,7 +96,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8815336493014246324}
-  - component: {fileID: 8331372589367388018}
   - component: {fileID: 3246462219494534301}
   - component: {fileID: 7044444054557229124}
   - component: {fileID: 2643684224453498500}
@@ -128,19 +127,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 2}
   m_SizeDelta: {x: 300, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8331372589367388018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 622220993572446942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b67b9029dfee65147b9495f92e1fc6ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HealthBar: {fileID: 2505336551091750099}
 --- !u!223 &3246462219494534301
 Canvas:
   m_ObjectHideFlags: 0
@@ -333,6 +319,7 @@ GameObject:
   - component: {fileID: 3075295343706149480}
   - component: {fileID: 8337847524699957496}
   - component: {fileID: 9043427525569005527}
+  - component: {fileID: 571854313697818631}
   - component: {fileID: 1649025956357640942}
   - component: {fileID: 3397408232669700733}
   - component: {fileID: 1002862133501886174}
@@ -405,11 +392,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerNameText: {fileID: 1261977969066306263}
-  _worldCanvas: {fileID: 8331372589367388018}
+  _worldCanvas: {fileID: 0}
   _currentHealth: 0
   _currentStamina: 0
   _minimpapIconGreen: {fileID: 1410778891925294627}
   _minimpapIconRed: {fileID: 313897887131582111}
+--- !u!114 &571854313697818631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4652148071552920886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67b9029dfee65147b9495f92e1fc6ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HealthBar: {fileID: 2505336551091750099}
+  WorldSpaceCanvas: {fileID: 3246462219494534301}
 --- !u!114 &1649025956357640942
 MonoBehaviour:
   m_ObjectHideFlags: 0

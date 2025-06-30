@@ -20,15 +20,21 @@ public class Player : MonoBehaviour, IDamaged
     
     private void Awake()
     {
+        Debug.Log("Awake");
         _photonView = GetComponent<PhotonView>();
         _playerStat = GetComponent<PlayerStat>();
+        _worldCanvas = GetComponent<PlayerWorldSpaceCanvas>();
+        _currentHealth = _playerStat.MaxHealth;
+        _currentStamina = _playerStat.MaxStamina;
     }
     
     private void Start()
     {
+        Debug.Log("Player Start");
         _worldCanvas.SetMaxHealth(_playerStat.MaxHealth);
-        _currentHealth = _playerStat.MaxHealth;
-        _currentStamina = _playerStat.MaxStamina;
+        _worldCanvas.UpdateHealthBar(_currentHealth);
+        // _photonView.RPC("SetMaxHealth", RpcTarget.AllBuffered, _playerStat.MaxHealth);
+        // _photonView.RPC("UpdateHealthBar", RpcTarget.AllBuffered, _currentHealth);
         _playerNameText.text = $"{_photonView.Owner.NickName}_{_photonView.OwnerActorNr}";
         if (_photonView.IsMine)
         {
@@ -71,9 +77,9 @@ public class Player : MonoBehaviour, IDamaged
     [PunRPC]
     public void Damaged(float damage)
     {
-        Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
         _currentHealth -= damage;
         _currentHealth = Mathf.Max(_currentHealth, 0);
+        // _photonView.RPC("UpdateHealthBar", RpcTarget.AllBuffered, _currentHealth);
         _worldCanvas.UpdateHealthBar(_currentHealth);
         if (_photonView.IsMine)
         {

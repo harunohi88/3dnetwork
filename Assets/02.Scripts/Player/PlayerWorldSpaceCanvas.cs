@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
 using Microlight.MicroBar;
+using Photon.Pun;
 
 public class PlayerWorldSpaceCanvas : MonoBehaviour
 {
 	public MicroBar HealthBar;
+	public Canvas WorldSpaceCanvas;
 	
 	public void Awake()
 	{
@@ -13,7 +15,7 @@ public class PlayerWorldSpaceCanvas : MonoBehaviour
 	
 	private void Update()
 	{
-		transform.forward = Camera.main.transform.forward;
+		WorldSpaceCanvas.transform.forward = Camera.main.transform.forward;
 	}
 	
 	public void SetMaxHealth(float maxHealth)
