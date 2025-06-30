@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         _currentStamina = Mathf.Min(_playerStat.MaxStamina, _currentStamina);
         if (_photonView.IsMine)
         {
-            HUD.Instance.UpdateStaminaBar(_currentStamina);
+            EventManager.Instance.OnPlayerStaminaChanged?.Invoke(_currentStamina);
         }
     }
     
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
         _staminaRegenTimer = _playerStat.StaminaRegenDelay;
         if (_photonView.IsMine)
         {
-            HUD.Instance.UpdateStaminaBar(_currentStamina);
+            EventManager.Instance.OnPlayerStaminaChanged?.Invoke(_currentStamina);
         }
         return true;
     }

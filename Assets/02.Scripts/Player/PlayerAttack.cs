@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerAttack : PlayerAbility
@@ -34,7 +35,13 @@ public class PlayerAttack : PlayerAbility
 		
 		int randomIndex = Random.Range(0, _attackAnimationTriggers.Count);
 		
-		_animator.SetTrigger(_attackAnimationTriggers[randomIndex]);
+		_photonView.RPC(nameof(PlayAttackAnimation), RpcTarget.All, randomIndex);
 		_cooldownTimer = 1f / _ownerPlayer.PlayerStat.AttackSpeed;
+	}
+
+	[PunRPC]
+	private void PlayAttackAnimation(int randomIndex)
+	{
+		_animator.SetTrigger(_attackAnimationTriggers[randomIndex]);
 	}
 }

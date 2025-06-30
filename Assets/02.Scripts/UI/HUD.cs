@@ -12,6 +12,11 @@ public class HUD : BehaviourSingleton<HUD>
 		_healthBar.Initialize(0);
 		_staminaBar.Initialize(0);
 	}
+
+	private void Start()
+	{
+		EventManager.Instance.OnPlayerStaminaChanged += UpdateStaminaBar;
+	}
 	
 	public void SetMaxStamina(float maxStamina)
 	{
