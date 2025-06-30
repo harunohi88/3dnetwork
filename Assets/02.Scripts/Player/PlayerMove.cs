@@ -42,6 +42,7 @@ public class PlayerMove : PlayerAbility, IPunObservable
 
         ToggleRun();
         CheckGrounded();
+        if (_ownerPlayer.IsDead) return;
         HandleJump();
         Move(inputDirection);
     }
@@ -76,6 +77,11 @@ public class PlayerMove : PlayerAbility, IPunObservable
         if (_characterController.isGrounded && _velocity.y < 0f)
         {
             _velocity.y = -2f;
+        }
+
+        if (!_characterController.isGrounded && transform.position.y <= -50f)
+        {
+            StartCoroutine(_ownerPlayer.OnDeathCoroutine());
         }
     }
 
