@@ -48,7 +48,6 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 	{
 		Debug.Log($"Joined Room: {PhotonNetwork.CurrentRoom.Name}");
 		
-		PhotonNetwork.Instantiate("Player", RandomSpawn.Instance.GetRandomSpawnPoint(), Quaternion.identity);
 	}
 
 	public override void OnJoinRandomFailed(short returnCode, string message)

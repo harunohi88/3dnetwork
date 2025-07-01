@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 3075295343706149480}
   - component: {fileID: 8337847524699957496}
   - component: {fileID: 9043427525569005527}
+  - component: {fileID: 4890374016343853936}
   - component: {fileID: 571854313697818631}
   - component: {fileID: 1649025956357640942}
   - component: {fileID: 3397408232669700733}
@@ -402,6 +403,21 @@ MonoBehaviour:
   _characterController: {fileID: 0}
   _cinemachineImpulseSource: {fileID: 0}
   IsDead: 0
+--- !u!114 &4890374016343853936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4652148071552920886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b19854de6d5a54ebfab7e27b379bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 1467262942076273938}
+  Strength: 0.1
+  Duration: 0.3
 --- !u!114 &571854313697818631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -787,6 +803,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1179321341398568535, guid: 889997a90c8439e4db507c528827b53a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1248741898253065176, guid: 889997a90c8439e4db507c528827b53a, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -843,9 +863,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 2929612645511517115, guid: 889997a90c8439e4db507c528827b53a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3106430974042377598, guid: 889997a90c8439e4db507c528827b53a, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3106430974042377598, guid: 889997a90c8439e4db507c528827b53a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3234768353685286640, guid: 889997a90c8439e4db507c528827b53a, type: 3}
       propertyPath: m_Layer
@@ -1164,6 +1192,12 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Attack3
+  - Type: 9
+    SynchronizeType: 0
+    Name: Respawn
+  - Type: 9
+    SynchronizeType: 0
+    Name: Die
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0

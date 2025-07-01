@@ -68,6 +68,6 @@ public class PlayerAttack : PlayerAbility
 		
 		// damaged.Damaged(_ownerPlayer.PlayerStat.AttackDamage);
 		PhotonView otherPhotonView = other.GetComponent<PhotonView>();
-		otherPhotonView.RPC(nameof(Player.Damaged), RpcTarget.AllBuffered, _ownerPlayer.PlayerStat.AttackDamage);
+		otherPhotonView.RPC(nameof(Player.Damaged), RpcTarget.AllBuffered, _ownerPlayer.PlayerStat.AttackDamage, _photonView.Owner.ActorNumber);
 	}
 }

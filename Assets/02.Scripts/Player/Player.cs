@@ -83,7 +83,7 @@ public class Player : MonoBehaviour, IDamaged
     }
     
     [PunRPC]
-    public void Damaged(float damage)
+    public void Damaged(float damage, int actorNumber)
     {
         if (IsDead) return;
         
@@ -98,6 +98,11 @@ public class Player : MonoBehaviour, IDamaged
         if (_currentHealth <= 0)
         {
             StartCoroutine(OnDeathCoroutine());
+            RoomManager.Instance.OnPlayerDeath(_photonView.Owner.ActorNumber, actorNumber);
+        }
+        else
+        {
+            GetComponent<PlayerShakingAbility>().Shake();
         }
     }
 
