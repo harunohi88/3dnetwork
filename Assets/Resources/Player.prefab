@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 5017054479794367278}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -403,6 +403,7 @@ MonoBehaviour:
   _characterController: {fileID: 0}
   _cinemachineImpulseSource: {fileID: 0}
   IsDead: 0
+  Score: 0
 --- !u!114 &4890374016343853936
 MonoBehaviour:
   m_ObjectHideFlags: 0

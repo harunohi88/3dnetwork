@@ -25,6 +25,7 @@ public class Player : MonoBehaviour, IDamaged
     private float _staminaRegenTimer;
     private bool _staminaRegenActive = true;
     public bool IsDead = false;
+    public int Score;
     
     private void Awake()
     {
@@ -81,6 +82,20 @@ public class Player : MonoBehaviour, IDamaged
             EventManager.Instance.OnPlayerStaminaChanged?.Invoke(_currentStamina);
         }
     }
+
+    [PunRPC]
+    public void Heal(float healAmount)
+    {
+        if (IsDead) return;
+        
+        _currentHealth += healAmount;
+        _currentHealth = Mathf.Min(_playerStat.MaxHealth, _currentHealth);
+        _worldCanvas.UpdateHealthBar(_currentHealth);
+        if (_photonView.IsMine)
+        {
+            EventManager.Instance.OnPlayerHealthChanged?.Invoke(_currentHealth);
+        }
+    }
     
     [PunRPC]
     public void Damaged(float damage, int actorNumber)
@@ -99,10 +114,31 @@ public class Player : MonoBehaviour, IDamaged
         {
             StartCoroutine(OnDeathCoroutine());
             RoomManager.Instance.OnPlayerDeath(_photonView.Owner.ActorNumber, actorNumber);
+            if (_photonView.IsMine)
+            {
+                MakeItem(Random.Range(1, 4));
+                MakeHealthPotion();
+            }
         }
         else
         {
             GetComponent<PlayerShakingAbility>().Shake();
+        }
+    }
+
+    private void MakeHealthPotion()
+    {
+        // if (Random.value < 0.3f)
+        {
+            ItemObjectFactory.Instance.RequestCreate(EItemType.Health, transform.position);
+        }
+    }
+
+    private void MakeItem(int count)
+    {
+        for (int i = 0; i < count; ++i)
+        {
+            ItemObjectFactory.Instance.RequestCreate(EItemType.Score, transform.position + new Vector3(0, 2f, 0));
         }
     }
 
