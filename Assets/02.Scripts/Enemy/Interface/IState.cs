@@ -1,6 +1,8 @@
-public interface IState
+public interface IState<T> where T : class
 {
-	public void Enter();
-	public void Update(float deltaTime);
-	public void Exit();
+	public bool IsInterruptable { get; }
+	
+	public void Enter(T context);
+	public void Update(T context, float deltaTime);
+	public void Exit(T context);
 }
