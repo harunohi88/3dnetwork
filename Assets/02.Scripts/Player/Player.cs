@@ -25,7 +25,6 @@ public class Player : MonoBehaviour, IDamaged
     private float _staminaRegenTimer;
     private bool _staminaRegenActive = true;
     public bool IsDead = false;
-    public int Score;
     
     private void Awake()
     {
@@ -118,6 +117,8 @@ public class Player : MonoBehaviour, IDamaged
             {
                 MakeItem(Random.Range(1, 4));
                 MakeHealthPotion();
+                _photonView.RPC(nameof(AddKillCount), (RpcTarget)actorNumber);
+                
             }
         }
         else
@@ -126,9 +127,15 @@ public class Player : MonoBehaviour, IDamaged
         }
     }
 
+    [PunRPC]
+    public void AddKillCount()
+    {
+        ScoreManager.Instance.AddKillCount();
+    }
+
     private void MakeHealthPotion()
     {
-        // if (Random.value < 0.3f)
+        if (Random.value < 0.3f)
         {
             ItemObjectFactory.Instance.RequestCreate(EItemType.Health, transform.position);
         }

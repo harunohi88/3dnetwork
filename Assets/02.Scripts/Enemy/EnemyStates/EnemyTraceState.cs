@@ -1,7 +1,7 @@
 public class EnemyTraceState : IState<EnemyStateMachine>
 {
-	public bool IsInterruptable { get; }
-
+	public bool IsInterruptable { get; } = true;
+	
 	public void Enter(EnemyStateMachine context)
 	{
 	}

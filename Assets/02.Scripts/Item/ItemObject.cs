@@ -21,7 +21,7 @@ public class ItemObject : MonoBehaviour
 	{
 		if (other.CompareTag("Player"))
 		{
-			other.GetComponent<Player>().Score += 10;
+			ScoreManager.Instance.AddScore(100);
 			ItemObjectFactory.Instance.RequestDelete(_photonView.ViewID);
 		}
 	}

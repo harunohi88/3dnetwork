@@ -1,16 +1,16 @@
 public class EnemyHitState : IState<EnemyStateMachine>
 {
-	public bool IsInterruptable { get; }
+    public bool IsInterruptable { get; } = true;
 
-	public void Enter(EnemyStateMachine context)
-	{
-	}
+    public void Enter(EnemyStateMachine context)
+    {
+    }
 
-	public void Update(EnemyStateMachine context, float deltaTime)
-	{
-	}
+    public void Update(EnemyStateMachine context, float deltaTime)
+    {
+    }
 
-	public void Exit(EnemyStateMachine context)
-	{
-	}
+    public void Exit(EnemyStateMachine context)
+    {
+    }
 }

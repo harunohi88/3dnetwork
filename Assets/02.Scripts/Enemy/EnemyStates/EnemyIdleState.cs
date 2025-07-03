@@ -7,7 +7,7 @@ public class EnemyIdleState : IState<EnemyStateMachine>
 
 	public void Enter(EnemyStateMachine context)
 	{
-		// 애니메이션 재생
+		context.Animator.Play("Combat Idle");
 		_elapsedTime = 0f;
 	}
 

@@ -66,7 +66,6 @@ public class ItemObjectFactory : MonoBehaviourPun
 	{
 		GameObject objectToDelete = PhotonView.Find(viewId)?.gameObject;
 		
-		Debug.Log(objectToDelete);
 		if (objectToDelete != null)
 		{
 			PhotonNetwork.Destroy(objectToDelete);

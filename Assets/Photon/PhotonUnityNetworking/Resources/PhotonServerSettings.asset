@@ -46,6 +46,10 @@ MonoBehaviour:
   - Create
   - Delete
   - Heal
+  - ChangeState
+  - RPCChangeState
+  - EventStateChange
+  - AddKillCount
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

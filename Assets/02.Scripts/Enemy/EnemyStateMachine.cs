@@ -1,14 +1,20 @@
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyStateMachine : MonoBehaviourPun
 {
+	public EnemyStat Stat;
+	
 	private Animator _animator;
 	public Animator Animator => _animator;
 	
 	private CharacterController _characterController;
 	public CharacterController CharacterController => _characterController;
+	
+	private NavMeshAgent _navMeshAgent;
+	public NavMeshAgent NavMeshAgent => _navMeshAgent;
 	
 	private IState<EnemyStateMachine> _currentState;
 	private Dictionary<EEnemyState, IState<EnemyStateMachine>> _stateDictionary;
@@ -17,6 +23,8 @@ public class EnemyStateMachine : MonoBehaviourPun
 	{
 		_animator = GetComponent<Animator>();
 		_characterController = GetComponent<CharacterController>();
+		_navMeshAgent = GetComponent<NavMeshAgent>();
+		Stat = GetComponent<EnemyStat>();
 		
 		_stateDictionary = new Dictionary<EEnemyState, IState<EnemyStateMachine>>
 		{
@@ -26,6 +34,8 @@ public class EnemyStateMachine : MonoBehaviourPun
 			{ EEnemyState.Attack, new EnemyAttackState() },
 			{ EEnemyState.Die, new EnemyDieState() }
 		};
+		
+		_currentState = _stateDictionary[EEnemyState.Idle];
 	}
 
 	private void Update()

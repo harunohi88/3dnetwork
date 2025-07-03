@@ -403,7 +403,6 @@ MonoBehaviour:
   _characterController: {fileID: 0}
   _cinemachineImpulseSource: {fileID: 0}
   IsDead: 0
-  Score: 0
 --- !u!114 &4890374016343853936
 MonoBehaviour:
   m_ObjectHideFlags: 0
